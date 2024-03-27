@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+
+{% block main %}
+<h1>Blog Detail</h1>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ blog_name.user }}</h5>
+    <p class="card-text">{{ blog_name.text }}</p>
+    <p class="card-text">{{ blog_name.create_at }}</p>
+  </div>
+  <a href="{% url 'blog/update' pk=blog_name.pk %}" class="btn btn-primary btn-sm">Edit</a>
+  <a href="{% url 'blog/delete' pk=blog_name.pk %}" class="btn btn-danger btn-sm">Delete</a>
+</div>
+{% for comment in comments %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-text">{{ comment.user.username }}: {{ comment.body }}</p>
+    <p class="card-text">{{ comment.created_at }}</p>
+  </div>
+</div>
+{% endfor %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <button type="submit">コメント投稿</button>
+</form>
+{% endblock %}
